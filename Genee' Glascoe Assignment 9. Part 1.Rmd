@@ -1,0 +1,30 @@
+---
+title: "Assignment #9: Part I"
+author: Genee' Glascoe
+date: "April 12, 2020" 
+output: html_notebook
+---
+
+**This notebook is to explore data from a study examining the effects of childhood sexual abuse on adult females**
+
+***
+### Question 1
+
+*This graph will compare the PTSD scores of women who suffered childhood sexual abuse to those who did not suffer childhood sexual abuse.*
+```{r include=FALSE}
+library(tidyverse)
+library(here)
+
+sexabuse.data <- read_csv(here("Data", "Sexual Abuse Data.csv"))
+
+sexabuse.data$csa <- factor(sexabuse.data$csa,
+                   labels = c("Abused", "NotAbused"),
+                   ordered = TRUE)
+```
+
+```{r} 
+ggplot(data = sexabuse.data) +
+  geom_point(aes(x = science, y = math, color = female)) +
+  labs(x = "Participants", y = "PTSD Scores", 
+  title = "Comparison of PTSD scores between Childhood Sexual Abuse and Non Childhood Sexual Abuse")
+```
