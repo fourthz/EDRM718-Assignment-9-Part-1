@@ -18,13 +18,41 @@ library(here)
 sexabuse.data <- read_csv(here("Data", "Sexual Abuse Data.csv"))
 
 sexabuse.data$csa <- factor(sexabuse.data$csa,
+                            levels = c("Abused", "NotAbused"),
                    labels = c("Abused", "NotAbused"),
                    ordered = TRUE)
 ```
-
-```{r} 
-ggplot(data = sexabuse.data) +
-  geom_point(aes(x = science, y = math, color = female)) +
-  labs(x = "Participants", y = "PTSD Scores", 
-  title = "Comparison of PTSD scores between Childhood Sexual Abuse and Non Childhood Sexual Abuse")
+```{r}
+ggplot(sexabuse.data, aes(x = csa, y = ptsd)) + 
+  geom_boxplot()+ 
+  labs(x = "Childhood Sexual Abuse", 
+       y = "PTSD Score", 
+       title = "Relationship of PTSD Scores of Sexually Abused and Not Abused Women") 
 ```
+ 
+
+***
+### Question 2
+
+*This graph will compare the childhood physical abuse scores of women who suffered childhood sexual abuse to those who did not suffer childhood sexual abuse.* 
+```{r}
+ggplot(sexabuse.data, aes(x = csa, y = cpa)) + 
+  geom_boxplot()+ 
+  labs(x = "Childhood Sexual Abuse", 
+       y = "Childhood Physical Abuse Score", 
+       title = "Relationship of Childhood Physical Abuse Scores of Sexually Abused and Not Abused Women") 
+```
+
+***
+### Question 3
+
+*This graph will show the relation of PTSD scores to childhood physical abuse scores comparing the childhood physical abuse scores of women who suffered childhood sexual abuse to those who did not suffer childhood sexual abuse.* 
+
+```{r}
+ggplot(sexabuse.data, aes(x=cpa, y=ptsd)) + 
+  geom_point(aes(x=cpa, y=ptsd, color = csa)) +
+  geom_smooth(method='lm',aes(linetype = csa, color = csa)) +
+  labs(title="Relationship of Childhood Physical Abuse Scores to PTSD scores of Sexually Abused and Not Abused Women", x="Childhood Physical Abuse Scores", y="PTSD Scores")
+```
+
+
